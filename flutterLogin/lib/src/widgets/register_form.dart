@@ -1,25 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutterLogin/src/api/my_api.dart';
+import 'package:flutterLogin/src/utils/dialogs.dart';
 import 'package:flutterLogin/src/utils/responsive.dart';
 import 'package:flutterLogin/src/widgets/input_text.dart';
 
-class LoginForm extends StatefulWidget {
+class RegisterForm extends StatefulWidget {
   @override
-  _LoginFormState createState() => _LoginFormState();
+  _RegisterFormState createState() => _RegisterFormState();
 }
 
-class _LoginFormState extends State<LoginForm> {
+class _RegisterFormState extends State<RegisterForm> {
   String _email;
   String _password;
+  String _user;
   GlobalKey<FormState> _formkey = GlobalKey();
-  _submit() {
+  _submit() async {
     final isOk = _formkey.currentState.validate();
     print('form is $isOk');
 
-    if (isOk) {
-      print('$_email, $_password');
+    if (isOk)  {
       MyApi myApi = MyApi();
-      myApi.login(context, email: _email, password: _password);
+
+      await myApi.register(context, username: _user, email: _email, password: _password);
+      //progresDialog.dissmiss();
     }
   }
 
@@ -36,6 +39,23 @@ class _LoginFormState extends State<LoginForm> {
           key: _formkey,
           child: Column(
             children: [
+              InputText(
+                label: 'USER NAME',
+                keyboardType: TextInputType.emailAddress,
+                fontSize: responsive.dp(responsive.isTablet ? 1.2 : 1.4),
+                onChange: (text) {
+                  _user = text;
+                },
+                validator: (text) {
+                  if (text.trim().length < 5) {
+                    return 'invalid user';
+                  }
+                  return null;
+                },
+              ),
+              SizedBox(
+                height: responsive.dp(2),
+              ),
               InputText(
                 label: 'EMAIL ADRRES',
                 keyboardType: TextInputType.emailAddress,
@@ -67,7 +87,7 @@ class _LoginFormState extends State<LoginForm> {
                           _password = text;
                         },
                         validator: (text) {
-                          if (text.trim().length == 0) {
+                          if (text.trim().length < 6) {
                             return 'invalid password';
                           }
                           return null;
@@ -76,13 +96,6 @@ class _LoginFormState extends State<LoginForm> {
                             responsive.dp(responsive.isTablet ? 1.2 : 1.4),
                       ),
                     ),
-                    FlatButton(
-                        padding: EdgeInsets.symmetric(vertical: 10),
-                        onPressed: () {},
-                        child: Text('forgot the password',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: responsive.dp(1.5))))
                   ],
                 ),
               ),
@@ -95,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
                   onPressed: _submit,
                   padding: EdgeInsets.symmetric(vertical: 15),
                   child: Text(
-                    'Sign In',
+                    'Sign Up',
                     style: TextStyle(
                         color: Colors.white, fontSize: responsive.dp(1.5)),
                   ),
@@ -109,15 +122,15 @@ class _LoginFormState extends State<LoginForm> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'New to Friendly Desi?',
+                    'Already have an account?',
                     style: TextStyle(fontSize: responsive.dp(1.5)),
                   ),
                   FlatButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, 'register');
+                      Navigator.pushNamed(context, 'login');
                     },
                     child: Text(
-                      'Sign Up',
+                      'Sign In',
                       style: TextStyle(
                           color: Colors.pinkAccent,
                           fontSize: responsive.dp(1.5)),
