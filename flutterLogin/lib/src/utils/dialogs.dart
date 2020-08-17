@@ -30,11 +30,16 @@ class ProgresDialog {
   void show() {
     showCupertinoModalPopup(
         context: this.context,
-        builder: (_) => Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Center(
-                child: CircularProgressIndicator(),
+        builder: (_) => WillPopScope(
+              onWillPop: () async {
+                return false;
+              },
+              child: Container(
+                width: double.infinity,
+                height: double.infinity,
+                child: Center(
+                  child: CircularProgressIndicator(),
+                ),
               ),
             ));
   }

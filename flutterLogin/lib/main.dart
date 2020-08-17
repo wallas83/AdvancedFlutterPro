@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutterLogin/src/pages/home_page.dart';
 import 'package:flutterLogin/src/pages/login_page.dart';
 import 'package:flutterLogin/src/pages/registro_page.dart';
+import 'package:flutterLogin/src/pages/splash_page.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: LoginPage(),
+      home: SplashPage(),
       routes: {
         RegisterPage.routeName : (BuildContext context) => RegisterPage(),
         LoginPage.routeName   :  (BuildContext  context) => LoginPage(),

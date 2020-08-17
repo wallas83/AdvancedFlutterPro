@@ -18,8 +18,8 @@ class _LoginFormState extends State<LoginForm> {
 
     if (isOk) {
       print('$_email, $_password');
-      MyApi myApi = MyApi();
-      myApi.login(context, email: _email, password: _password);
+      
+      MyApi.instance.login(context, email: _email, password: _password);
     }
   }
 

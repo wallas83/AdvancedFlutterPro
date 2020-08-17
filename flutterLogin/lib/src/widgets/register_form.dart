@@ -19,9 +19,8 @@ class _RegisterFormState extends State<RegisterForm> {
     print('form is $isOk');
 
     if (isOk)  {
-      MyApi myApi = MyApi();
 
-      await myApi.register(context, username: _user, email: _email, password: _password);
+      await MyApi.instance.register(context, username: _user, email: _email, password: _password);
       //progresDialog.dissmiss();
     }
   }

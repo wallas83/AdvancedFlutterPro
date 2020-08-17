@@ -1,11 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterLogin/src/utils/responsive.dart';
 
 class Avatar extends StatelessWidget {
+  final String url;
+  final VoidCallback onPressed;
+  final double imageSize;
+
+  const Avatar({Key key, this.url, this.onPressed, this.imageSize = 100}) : super(key: key);
+  
+
   @override
   Widget build(BuildContext context) {
-    final responosive = Responsive(context);
     return Stack(
       children: [
         Container(
@@ -21,9 +26,10 @@ class Avatar extends StatelessWidget {
               ]),
           child: ClipOval(
             child: Image.network(
-              'https://lh3.googleusercontent.com/-d-cldq0iIFQ/WpakxI3OXoI/AAAAAAAAOs0/v7lpT9KuFvMWyYUlcFBvonmUTFcfkbFhACHMYCw/avatar-santi%255B2%255D?imgmax=800',
-              width: responosive.wp(25),
-              height: responosive.wp(25),
+               this.url ?? 'https://www.w3schools.com/howto/img_avatar.png',
+              width: this.imageSize,
+              height: this.imageSize,
+              fit: BoxFit.cover,
             ),
           ),
         ),
@@ -44,7 +50,7 @@ class Avatar extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
-              onPressed: () {}),
+              onPressed: this.onPressed ),
         ),
       ],
     );
